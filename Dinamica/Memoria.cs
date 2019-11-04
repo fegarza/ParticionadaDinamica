@@ -98,12 +98,45 @@ namespace Dinamica
             Particion actual = Primera;
             while (actual.Siguiente != null)
             {
-                 
+
                 actual = actual.Siguiente;
             }
             return actual;
 
         }
+
+        public bool EsLaCantidadMenor(double _cant)
+        {
+             double? cantidadMenor = null;
+            Particion actual = Primera;
+            while (actual != null)
+            {
+                if (!actual.Ocupada)
+                {
+                    if (cantidadMenor == null)
+                    {
+                        cantidadMenor = actual.Size;
+                    }
+                    else
+                    {
+                        if (actual.Size < cantidadMenor)
+                        {
+                            cantidadMenor = actual.Size;
+                        }
+                    }
+                }
+                actual = actual.Siguiente;
+            }
+             if (_cant <= cantidadMenor)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool AgregarParticion(double _size, bool _estado, string _titulo)
         {
 
@@ -153,12 +186,15 @@ namespace Dinamica
                 {
                     bool insertado = false;
                     actual = Primera;
+                    //En caso de tener solo 1 particion
                     if (actual.Siguiente == null)
                     {
                         if (!actual.Ocupada)
                         {
                             if (_size <= actual.Size)
                             {
+
+
                                 insertado = true;
                                 if ((actual.Size - _size) != 0)
                                 {
@@ -177,8 +213,12 @@ namespace Dinamica
                                     Primera = P;
                                     Ultima = TraerUltimo();
                                 }
+
+
+
                             }
                         }
+
                     }
                     while (actual != null && !insertado)
                     {
@@ -190,61 +230,83 @@ namespace Dinamica
                         {
                             if (_size <= actual.Size)
                             {
-                                //Tiene un anterior
-                                if (actual.Anterior != null)
+                                if (EsLaCantidadMenor(actual.Size))
                                 {
-                                    //Particion con la tarea
-                                    Particion P = CrearParticion(_size, _estado, _titulo);
-                                    nombresUsados.Add(_titulo);
-                                    Particion anterior = actual.Anterior;
 
 
-
-                                    if ((actual.Size - _size) != 0)
+                                    //Tiene un anterior
+                                    if (actual.Anterior != null)
                                     {
-                                        //Particion con  el espacio libre
-                                        Particion aux = CrearParticion((actual.Size - _size), false);
-                                        aux.Siguiente = actual.Siguiente;
-                                        aux.Anterior = P;
-                                        P.Siguiente =
-                                            aux;
-                                        P.Anterior = anterior;
-                                        anterior.Siguiente = P;
-                                        Ultima = TraerUltimo();
-                                        insertado = true;
+                                        //Particion con la tarea
+                                        Particion P = CrearParticion(_size, _estado, _titulo);
+                                        nombresUsados.Add(_titulo);
+                                        Particion anterior = actual.Anterior;
+
+
+
+                                        if ((actual.Size - _size) != 0)
+                                        {
+                                            //Particion con  el espacio libre
+                                            Particion aux = CrearParticion((actual.Size - _size), false);
+                                            aux.Siguiente = actual.Siguiente;
+                                            aux.Anterior = P;
+                                            P.Siguiente = aux;
+                                            P.Anterior = anterior;
+                                            if (actual.Siguiente != null)
+                                            {
+                                                actual.Siguiente.Anterior = aux;
+                                            }
+                                            anterior.Siguiente = P;
+                                            Ultima = TraerUltimo();
+                                            insertado = true;
+                                        }
+                                        else
+                                        {
+                                            //Solo la particion completa
+
+                                            P.Siguiente = actual.Siguiente;
+                                            P.Anterior = anterior;
+                                            if(actual.Siguiente != null)
+                                            {
+                                                actual.Siguiente.Anterior = P;
+                                            }
+                                            anterior.Siguiente = P;
+                                            Ultima = TraerUltimo();
+                                            insertado = true;
+                                        }
+
                                     }
                                     else
                                     {
-                                        //Solo la particion completa
-
-                                        P.Siguiente = actual.Siguiente;
-                                        P.Anterior = anterior;
-                                        anterior.Siguiente = P;
-                                        Ultima = TraerUltimo();
-                                        insertado = true;
+                                        if ((actual.Size - _size) != 0)
+                                        {
+                                            MessageBox.Show("x1");
+                                            Particion P = CrearParticion(_size, _estado, _titulo);
+                                            nombresUsados.Add(_titulo);
+                                            P.Siguiente = CrearParticion((actual.Size - _size), false).Siguiente = actual.Siguiente;
+                                            Primera = P;
+                                            Ultima = TraerUltimo();
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("x2");
+                                            Particion P = CrearParticion(_size, _estado, _titulo);
+                                            P.Siguiente = actual.Siguiente;
+                                            if(actual.Siguiente != null)
+                                            {
+                                                actual.Siguiente.Anterior = P;
+                                            }
+                                            nombresUsados.Add(_titulo);
+                                            actual = P;
+                                            Primera = P;
+                                            Ultima = TraerUltimo();
+                                        }
                                     }
-
                                 }
                                 else
                                 {
-                                    if ((actual.Size - _size) != 0)
-                                    {
-                                        Particion P = CrearParticion(_size, _estado, _titulo);
-                                        nombresUsados.Add(_titulo);
-                                        P.Siguiente = CrearParticion((actual.Size - _size), false).Siguiente = actual.Siguiente;
-                                        Primera = P;
-                                        Ultima = TraerUltimo();
-                                    }
-                                    else
-                                    {
-                                        Particion P = CrearParticion(_size, _estado, _titulo);
-                                        nombresUsados.Add(_titulo);
-                                        P.Siguiente = actual.Siguiente;
-                                        Primera = P;
-                                        Ultima = TraerUltimo();
-                                    }
+                                    actual = actual.Siguiente;
                                 }
-
 
                             }
                             else
@@ -260,6 +322,7 @@ namespace Dinamica
             }
             else
             {
+                MessageBox.Show("Titulo utilizado");
                 return false;
             }
 
@@ -272,17 +335,17 @@ namespace Dinamica
             int count = -1;
             while (actual != null && !encontrado)
             {
-                
-                if (actual.Ocupada )
+
+                if (actual.Ocupada)
                 {
                     count++;
 
                 }
-              
+
                 //MessageBox.Show($"-->({count}) id: {actual.id} ");
                 if (count == _cont)
                 {
-                    
+
                     encontrado = true;
                     //en caso de que tenga los dos espacios libres
                     if (actual.Anterior != null && !actual.Anterior.Ocupada && actual.Siguiente != null && !actual.Siguiente.Ocupada)
@@ -310,8 +373,8 @@ namespace Dinamica
 
                             Primera = p;
                         }
-                        
-                           
+
+
 
                     }
                     else if ((actual.Anterior != null && !actual.Anterior.Ocupada) || (actual.Siguiente != null && !actual.Siguiente.Ocupada))
@@ -319,7 +382,7 @@ namespace Dinamica
                         //En caso de que tenga un espacio liberado anterior
                         if (actual.Anterior != null && !actual.Anterior.Ocupada)
                         {
-                         //   MessageBox.Show($"Espacio libre a anterior de {actual.id} detectado");
+                            //   MessageBox.Show($"Espacio libre a anterior de {actual.id} detectado");
                             //En caso de que se trate del primer elemento
                             if (actual.Anterior.Anterior == null)
                             {
@@ -339,7 +402,7 @@ namespace Dinamica
                                 double SizeTotal = actual.Anterior.Size + actual.Size;
                                 Particion p = CrearParticion(SizeTotal, false);
                                 p.Siguiente = actual.Siguiente;
-                                if(actual.Siguiente != null)
+                                if (actual.Siguiente != null)
                                 {
                                     actual.Siguiente.Anterior = p;
                                 }
@@ -356,7 +419,7 @@ namespace Dinamica
                         //En caso de que tenga un espacio liberado siguiente
                         if (actual.Siguiente != null && !actual.Siguiente.Ocupada)
                         {
-                           // MessageBox.Show("Espacio libre al siguiente detectado");                            //En caso de que se trate del primer elemento
+                            // MessageBox.Show("Espacio libre al siguiente detectado");                            //En caso de que se trate del primer elemento
                             if (actual.Anterior == null)
                             {
                                 double SizeTotal = actual.Size + actual.Siguiente.Size;
@@ -405,7 +468,7 @@ namespace Dinamica
                         na.Ocupada = false;
                         na.Siguiente = actual.Siguiente;
                         na.Anterior = actual.Anterior;
-                        if(actual.Siguiente != null || actual.Anterior != null)
+                        if (actual.Siguiente != null || actual.Anterior != null)
                         {
                             if (actual.Anterior != null)
                             {
@@ -423,10 +486,10 @@ namespace Dinamica
                             {
                                 Ultima = na;
                             }
-                            
+
                         }
-                        
-                      
+
+
                         liberado = true;
                     }
                 }
@@ -439,7 +502,7 @@ namespace Dinamica
 
             return liberado;
         }
-      
+
         public IEnumerator GetEnumerator()
         {
             if (modo == "particiones")
