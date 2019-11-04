@@ -113,13 +113,13 @@ namespace Dinamica
             {
                 if (!actual.Ocupada)
                 {
-                    if (cantidadMenor == null)
+                    if (cantidadMenor == null && actual.Size >= _cant)
                     {
                         cantidadMenor = actual.Size;
                     }
                     else
                     {
-                        if (actual.Size < cantidadMenor)
+                        if (actual.Size < cantidadMenor && actual.Size >= _cant)
                         {
                             cantidadMenor = actual.Size;
                         }
@@ -315,7 +315,10 @@ namespace Dinamica
                             }
                         }
                     }
-
+                    if (!insertado)
+                    {
+                        MessageBox.Show("No hay espacio disponible");
+                    }
                     return insertado;
                 }
 
