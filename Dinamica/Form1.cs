@@ -19,29 +19,43 @@ namespace Dinamica
         {
             InitializeComponent();
             cbUnidad.DataSource = Unidades;
-
+            
         }
-
 
         public void DibujarGrafica()
         {
+            double Cant = MiMemoria.MemoriaTotal;
+            dtgLibres.Rows.Clear();
+            dtgTareas.Rows.Clear();
             pnMemoria.Controls.Clear();
+            int i = 0;
             //MessageBox.Show($"Memoria Total: {MiMemoria.Height.ToString()}, height respecto{MiMemoria.SO.miPanel.Height.ToString()}");
 
             lbTareas.Items.Clear();
-            MiMemoria.modo = "tareas";
-            foreach (Particion p in MiMemoria)
-            {
-                //MessageBox.Show($"Memoria Total: {MiMemoria.Size.ToString()}, height respecto{p.Height.ToString()}");
-                lbTareas.Items.Add(p.ToString());
-            }
+
             MiMemoria.modo = "particiones";
             foreach (Particion p in MiMemoria)
             {
+                
                 //MessageBox.Show($"Memoria Total: {MiMemoria.Size.ToString()}, height respecto{p.Height.ToString()}");
-                pnMemoria.Controls.Add(p.GetPanel());
+                Cant -= p.Size;
+                pnMemoria.Controls.Add(p.GetPanel(Cant));
+                if (!p.Ocupada)
+                {
+                    i++;
+                    dtgLibres.Rows.Add(i, p.PosicionY, p.Size);
+                }
             }
-            pnMemoria.Controls.Add(MiMemoria.SO.GetPanel());
+            i = 0;
+            MiMemoria.modo = "tareas";
+            foreach (Particion p in MiMemoria)
+            {
+
+                //MessageBox.Show($"Memoria Total: {MiMemoria.Size.ToString()}, height respecto{p.Height.ToString()}");
+                dtgTareas.Rows.Add(p.id, p.PosicionY, p.Size);
+                lbTareas.Items.Add(p.ToString());
+            }
+            pnMemoria.Controls.Add(MiMemoria.SO.GetPanel(0));
             MiMemoria.MostrarMemoriaDisponible();
             lblDisponible.Text = Nucleo.RepresentarKB(MiMemoria.MemoriaDisponible);
 
@@ -89,36 +103,6 @@ namespace Dinamica
                
         }
 
-        private void tbSize_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                double.Parse(tbSize.Text);
-            }
-            catch
-            {
-                if (!(tbSize.Text == "."))
-                {
-                    tbSize.Clear();
-                }
-            }
-        }
-
-        private void tbSO_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                double.Parse(tbSO.Text);
-            }
-            catch
-            {
-                if (!(tbSO.Text == "."))
-                {
-                    tbSO.Clear();
-                }
-            }
-        }
-
         private void btnAgregarTarea_Click(object sender, EventArgs e)
         {
             if (!jPanel.Visible)
@@ -131,6 +115,7 @@ namespace Dinamica
             }
             else
             {
+                lbSB.DataSource = MiMemoria.StandBy;
                 //MessageBox.Show("Error al agregar la tarea, no hay suficiente espacio disponible");
             }
         }
@@ -148,9 +133,58 @@ namespace Dinamica
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void tbSO_KeyPress(object sender, KeyPressEventArgs e)
         {
+            char ch = e.KeyChar;
 
+            if (ch == 46 && tbSO.Text.IndexOf('.') != -1)
+            {
+                e.Handled = true;
+                return;
+            }
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbTarea_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (ch == 46 && tbTarea.Text.IndexOf('.') != -1)
+            {
+                e.Handled = true;
+                return;
+            }
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbSize_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (ch == 46 && tbSize.Text.IndexOf('.') != -1)
+            {
+                e.Handled = true;
+                return;
+            }
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(lbSB.SelectedIndex != -1)
+            {
+                MessageBox.Show(lbSB.SelectedIndex.ToString());
+                MiMemoria.StandBy.RemoveAt(lbSB.SelectedIndex);
+            }
         }
     }
 }

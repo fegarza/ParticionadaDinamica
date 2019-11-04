@@ -32,12 +32,15 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pnRight = new System.Windows.Forms.Panel();
-            this.btnLiberarTarea = new System.Windows.Forms.Button();
+            this.dtgLibres = new System.Windows.Forms.DataGridView();
+            this.dtgTareas = new System.Windows.Forms.DataGridView();
+            this.jPanel = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.lbTareas = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.lbSB = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnLiberarTarea = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lbTareas = new System.Windows.Forms.ListBox();
             this.pnTareas = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.tbTitle = new System.Windows.Forms.TextBox();
@@ -55,6 +58,12 @@
             this.tbSize = new System.Windows.Forms.TextBox();
             this.cbUnidad = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.lblSize = new System.Windows.Forms.Label();
             this.lblDisponible = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -65,21 +74,22 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.jPanel = new System.Windows.Forms.Panel();
+            this.AreaLibre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Posicion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tamaño = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgLibres)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTareas)).BeginInit();
+            this.jPanel.SuspendLayout();
             this.pnTareas.SuspendLayout();
             this.pnSO.SuspendLayout();
             this.pnSize.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.jPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnMemoria
@@ -89,7 +99,7 @@
             this.pnMemoria.Location = new System.Drawing.Point(0, 0);
             this.pnMemoria.Margin = new System.Windows.Forms.Padding(2);
             this.pnMemoria.Name = "pnMemoria";
-            this.pnMemoria.Size = new System.Drawing.Size(338, 606);
+            this.pnMemoria.Size = new System.Drawing.Size(338, 542);
             this.pnMemoria.TabIndex = 0;
             // 
             // label9
@@ -108,7 +118,10 @@
             // 
             // pnRight
             // 
+            this.pnRight.AutoScroll = true;
             this.pnRight.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pnRight.Controls.Add(this.dtgLibres);
+            this.pnRight.Controls.Add(this.dtgTareas);
             this.pnRight.Controls.Add(this.jPanel);
             this.pnRight.Controls.Add(this.pnTareas);
             this.pnRight.Controls.Add(this.label3);
@@ -119,19 +132,46 @@
             this.pnRight.Location = new System.Drawing.Point(0, 0);
             this.pnRight.Margin = new System.Windows.Forms.Padding(2);
             this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(1005, 813);
+            this.pnRight.Size = new System.Drawing.Size(1005, 749);
             this.pnRight.TabIndex = 1;
             // 
-            // btnLiberarTarea
+            // dtgLibres
             // 
-            this.btnLiberarTarea.Location = new System.Drawing.Point(16, 173);
-            this.btnLiberarTarea.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLiberarTarea.Name = "btnLiberarTarea";
-            this.btnLiberarTarea.Size = new System.Drawing.Size(149, 27);
-            this.btnLiberarTarea.TabIndex = 16;
-            this.btnLiberarTarea.Text = "Liberar";
-            this.btnLiberarTarea.UseVisualStyleBackColor = true;
-            this.btnLiberarTarea.Click += new System.EventHandler(this.btnLiberarTarea_Click);
+            this.dtgLibres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgLibres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AreaLibre,
+            this.Posicion,
+            this.Tamaño});
+            this.dtgLibres.Location = new System.Drawing.Point(360, 337);
+            this.dtgLibres.Name = "dtgLibres";
+            this.dtgLibres.Size = new System.Drawing.Size(338, 183);
+            this.dtgLibres.TabIndex = 21;
+            // 
+            // dtgTareas
+            // 
+            this.dtgTareas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgTareas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Nombre,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dtgTareas.Location = new System.Drawing.Point(13, 337);
+            this.dtgTareas.Name = "dtgTareas";
+            this.dtgTareas.Size = new System.Drawing.Size(338, 183);
+            this.dtgTareas.TabIndex = 20;
+            // 
+            // jPanel
+            // 
+            this.jPanel.Controls.Add(this.label7);
+            this.jPanel.Controls.Add(this.lbSB);
+            this.jPanel.Controls.Add(this.label6);
+            this.jPanel.Controls.Add(this.btnLiberarTarea);
+            this.jPanel.Controls.Add(this.button1);
+            this.jPanel.Controls.Add(this.lbTareas);
+            this.jPanel.Location = new System.Drawing.Point(319, 3);
+            this.jPanel.Name = "jPanel";
+            this.jPanel.Size = new System.Drawing.Size(534, 236);
+            this.jPanel.TabIndex = 19;
+            this.jPanel.Visible = false;
             // 
             // label7
             // 
@@ -145,24 +185,14 @@
             this.label7.Text = "Tareas";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lbTareas
+            // lbSB
             // 
-            this.lbTareas.FormattingEnabled = true;
-            this.lbTareas.Location = new System.Drawing.Point(16, 41);
-            this.lbTareas.Margin = new System.Windows.Forms.Padding(2);
-            this.lbTareas.Name = "lbTareas";
-            this.lbTareas.Size = new System.Drawing.Size(150, 121);
-            this.lbTareas.TabIndex = 14;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(190, 173);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 27);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Liberar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.lbSB.FormattingEnabled = true;
+            this.lbSB.Location = new System.Drawing.Point(190, 40);
+            this.lbSB.Margin = new System.Windows.Forms.Padding(2);
+            this.lbSB.Name = "lbSB";
+            this.lbSB.Size = new System.Drawing.Size(150, 121);
+            this.lbSB.TabIndex = 11;
             // 
             // label6
             // 
@@ -176,14 +206,36 @@
             this.label6.Text = "Tareas en stand by";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lbSB
+            // btnLiberarTarea
             // 
-            this.lbSB.FormattingEnabled = true;
-            this.lbSB.Location = new System.Drawing.Point(190, 40);
-            this.lbSB.Margin = new System.Windows.Forms.Padding(2);
-            this.lbSB.Name = "lbSB";
-            this.lbSB.Size = new System.Drawing.Size(150, 121);
-            this.lbSB.TabIndex = 11;
+            this.btnLiberarTarea.Location = new System.Drawing.Point(16, 173);
+            this.btnLiberarTarea.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLiberarTarea.Name = "btnLiberarTarea";
+            this.btnLiberarTarea.Size = new System.Drawing.Size(149, 27);
+            this.btnLiberarTarea.TabIndex = 16;
+            this.btnLiberarTarea.Text = "Liberar";
+            this.btnLiberarTarea.UseVisualStyleBackColor = true;
+            this.btnLiberarTarea.Click += new System.EventHandler(this.btnLiberarTarea_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(190, 173);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(149, 27);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Liberar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbTareas
+            // 
+            this.lbTareas.FormattingEnabled = true;
+            this.lbTareas.Location = new System.Drawing.Point(16, 41);
+            this.lbTareas.Margin = new System.Windows.Forms.Padding(2);
+            this.lbTareas.Name = "lbTareas";
+            this.lbTareas.Size = new System.Drawing.Size(150, 121);
+            this.lbTareas.TabIndex = 14;
             // 
             // pnTareas
             // 
@@ -192,7 +244,7 @@
             this.pnTareas.Controls.Add(this.label5);
             this.pnTareas.Controls.Add(this.tbTarea);
             this.pnTareas.Controls.Add(this.btnAgregarTarea);
-            this.pnTareas.Location = new System.Drawing.Point(21, 37);
+            this.pnTareas.Location = new System.Drawing.Point(11, 38);
             this.pnTareas.Margin = new System.Windows.Forms.Padding(2);
             this.pnTareas.Name = "pnTareas";
             this.pnTareas.Size = new System.Drawing.Size(208, 164);
@@ -235,6 +287,7 @@
             this.tbTarea.Name = "tbTarea";
             this.tbTarea.Size = new System.Drawing.Size(163, 20);
             this.tbTarea.TabIndex = 2;
+            this.tbTarea.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTarea_KeyPress);
             // 
             // btnAgregarTarea
             // 
@@ -262,7 +315,7 @@
             this.pnSO.Controls.Add(this.label2);
             this.pnSO.Controls.Add(this.tbSO);
             this.pnSO.Controls.Add(this.btnAgregarSO);
-            this.pnSO.Location = new System.Drawing.Point(23, 37);
+            this.pnSO.Location = new System.Drawing.Point(13, 36);
             this.pnSO.Margin = new System.Windows.Forms.Padding(2);
             this.pnSO.Name = "pnSO";
             this.pnSO.Size = new System.Drawing.Size(208, 119);
@@ -286,7 +339,7 @@
             this.tbSO.Name = "tbSO";
             this.tbSO.Size = new System.Drawing.Size(163, 20);
             this.tbSO.TabIndex = 2;
-            this.tbSO.TextChanged += new System.EventHandler(this.tbSO_TextChanged);
+            this.tbSO.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSO_KeyPress);
             // 
             // btnAgregarSO
             // 
@@ -304,7 +357,7 @@
             this.pnSize.Controls.Add(this.label1);
             this.pnSize.Controls.Add(this.btnSize);
             this.pnSize.Controls.Add(this.tbSize);
-            this.pnSize.Location = new System.Drawing.Point(25, 37);
+            this.pnSize.Location = new System.Drawing.Point(15, 36);
             this.pnSize.Margin = new System.Windows.Forms.Padding(2);
             this.pnSize.Name = "pnSize";
             this.pnSize.Size = new System.Drawing.Size(208, 124);
@@ -338,7 +391,7 @@
             this.tbSize.Name = "tbSize";
             this.tbSize.Size = new System.Drawing.Size(163, 20);
             this.tbSize.TabIndex = 0;
-            this.tbSize.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
+            this.tbSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSize_KeyPress);
             // 
             // cbUnidad
             // 
@@ -365,11 +418,71 @@
             this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 606);
+            this.panel2.Location = new System.Drawing.Point(0, 542);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(338, 207);
             this.panel2.TabIndex = 13;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(45, 166);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(132, 18);
+            this.label19.TabIndex = 25;
+            this.label19.Text = "Espacio disponible";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(45, 132);
+            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(46, 18);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Tarea";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(45, 96);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(38, 18);
+            this.label17.TabIndex = 23;
+            this.label17.Text = "S.O.";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.Blue;
+            this.panel5.Location = new System.Drawing.Point(11, 166);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(20, 20);
+            this.panel5.TabIndex = 20;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.Black;
+            this.panel6.Location = new System.Drawing.Point(11, 94);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(20, 20);
+            this.panel6.TabIndex = 21;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Red;
+            this.panel1.Location = new System.Drawing.Point(11, 130);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(20, 20);
+            this.panel1.TabIndex = 19;
             // 
             // lblSize
             // 
@@ -484,89 +597,45 @@
             this.panel4.Location = new System.Drawing.Point(667, 0);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(338, 813);
+            this.panel4.Size = new System.Drawing.Size(338, 749);
             this.panel4.TabIndex = 2;
             // 
-            // panel1
+            // AreaLibre
             // 
-            this.panel1.BackColor = System.Drawing.Color.Red;
-            this.panel1.Location = new System.Drawing.Point(11, 130);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(20, 20);
-            this.panel1.TabIndex = 19;
+            this.AreaLibre.HeaderText = "Area Libre";
+            this.AreaLibre.Name = "AreaLibre";
             // 
-            // panel5
+            // Posicion
             // 
-            this.panel5.BackColor = System.Drawing.Color.Blue;
-            this.panel5.Location = new System.Drawing.Point(11, 166);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(20, 20);
-            this.panel5.TabIndex = 20;
+            this.Posicion.HeaderText = "Posicion";
+            this.Posicion.Name = "Posicion";
             // 
-            // panel6
+            // Tamaño
             // 
-            this.panel6.BackColor = System.Drawing.Color.Black;
-            this.panel6.Location = new System.Drawing.Point(11, 94);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(20, 20);
-            this.panel6.TabIndex = 21;
+            this.Tamaño.HeaderText = "Tamaño";
+            this.Tamaño.Name = "Tamaño";
             // 
-            // label17
+            // Nombre
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(45, 96);
-            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(38, 18);
-            this.label17.TabIndex = 23;
-            this.label17.Text = "S.O.";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.Name = "Nombre";
             // 
-            // label18
+            // dataGridViewTextBoxColumn1
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(45, 132);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(46, 18);
-            this.label18.TabIndex = 24;
-            this.label18.Text = "Tarea";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Posicion";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
-            // label19
+            // dataGridViewTextBoxColumn2
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(45, 166);
-            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(132, 18);
-            this.label19.TabIndex = 25;
-            this.label19.Text = "Espacio disponible";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // jPanel
-            // 
-            this.jPanel.Controls.Add(this.label7);
-            this.jPanel.Controls.Add(this.lbSB);
-            this.jPanel.Controls.Add(this.label6);
-            this.jPanel.Controls.Add(this.btnLiberarTarea);
-            this.jPanel.Controls.Add(this.button1);
-            this.jPanel.Controls.Add(this.lbTareas);
-            this.jPanel.Location = new System.Drawing.Point(34, 400);
-            this.jPanel.Name = "jPanel";
-            this.jPanel.Size = new System.Drawing.Size(534, 236);
-            this.jPanel.TabIndex = 19;
-            this.jPanel.Visible = false;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Tamaño";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
             // Form1
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.IpAddress;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 813);
+            this.ClientSize = new System.Drawing.Size(1005, 749);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.pnRight);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -575,6 +644,10 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnRight.ResumeLayout(false);
             this.pnRight.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgLibres)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTareas)).EndInit();
+            this.jPanel.ResumeLayout(false);
+            this.jPanel.PerformLayout();
             this.pnTareas.ResumeLayout(false);
             this.pnTareas.PerformLayout();
             this.pnSO.ResumeLayout(false);
@@ -586,8 +659,6 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.jPanel.ResumeLayout(false);
-            this.jPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -637,6 +708,14 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel jPanel;
+        private System.Windows.Forms.DataGridView dtgTareas;
+        private System.Windows.Forms.DataGridView dtgLibres;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AreaLibre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Posicion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tamaño;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
 

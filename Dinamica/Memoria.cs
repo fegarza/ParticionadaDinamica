@@ -16,7 +16,7 @@ namespace Dinamica
         public Particion Primera;
         public Particion Ultima;
         public int Count = 0;
-        public double MemoriaDisponible = 0;
+        public double MemoriaDisponible = 0, MemoriaTotal = 0;
         public string modo = "particiones";
         public List<string> nombresUsados = new List<string>();
         /// <summary>
@@ -44,6 +44,7 @@ namespace Dinamica
         {
             Size = _size;
             Height = _height;
+            MemoriaTotal = Size;
             MemoriaDisponible = Size;
         }
         public void MostrarMemoriaDisponible()
@@ -119,7 +120,7 @@ namespace Dinamica
                     }
                     else
                     {
-                        if (actual.Size < cantidadMenor && actual.Size >= _cant)
+                        if (actual.Size <= cantidadMenor && actual.Size >= _cant)
                         {
                             cantidadMenor = actual.Size;
                         }
@@ -139,7 +140,6 @@ namespace Dinamica
 
         public bool AgregarParticion(double _size, bool _estado, string _titulo)
         {
-
             bool encontradoTitulo = false;
             Particion actual = Primera;
             while (actual != null && !encontradoTitulo)
@@ -193,8 +193,6 @@ namespace Dinamica
                         {
                             if (_size <= actual.Size)
                             {
-
-
                                 insertado = true;
                                 if ((actual.Size - _size) != 0)
                                 {
@@ -213,9 +211,6 @@ namespace Dinamica
                                     Primera = P;
                                     Ultima = TraerUltimo();
                                 }
-
-
-
                             }
                         }
 
@@ -232,8 +227,6 @@ namespace Dinamica
                             {
                                 if (EsLaCantidadMenor(actual.Size))
                                 {
-
-
                                     //Tiene un anterior
                                     if (actual.Anterior != null)
                                     {
@@ -241,8 +234,6 @@ namespace Dinamica
                                         Particion P = CrearParticion(_size, _estado, _titulo);
                                         nombresUsados.Add(_titulo);
                                         Particion anterior = actual.Anterior;
-
-
 
                                         if ((actual.Size - _size) != 0)
                                         {
@@ -263,7 +254,6 @@ namespace Dinamica
                                         else
                                         {
                                             //Solo la particion completa
-
                                             P.Siguiente = actual.Siguiente;
                                             P.Anterior = anterior;
                                             if(actual.Siguiente != null)
@@ -317,7 +307,17 @@ namespace Dinamica
                     }
                     if (!insertado)
                     {
-                        MessageBox.Show("No hay espacio disponible");
+                        //Agregar al StandBy
+                        if(_size <= (MemoriaTotal - SO.Size))
+                        {
+                            Particion P = CrearParticion(_size, _estado, _titulo);
+                            nombresUsados.Add(_titulo);
+                            StandBy.Add(P);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No hay espacio disponible");
+                        }
                     }
                     return insertado;
                 }
@@ -330,6 +330,7 @@ namespace Dinamica
             }
 
         }
+
         public bool Librear(int _cont)
         {
             bool liberado = false;
@@ -342,13 +343,11 @@ namespace Dinamica
                 if (actual.Ocupada)
                 {
                     count++;
-
                 }
 
                 //MessageBox.Show($"-->({count}) id: {actual.id} ");
                 if (count == _cont)
                 {
-
                     encontrado = true;
                     //en caso de que tenga los dos espacios libres
                     if (actual.Anterior != null && !actual.Anterior.Ocupada && actual.Siguiente != null && !actual.Siguiente.Ocupada)
@@ -363,7 +362,6 @@ namespace Dinamica
                         }
                         else
                         {
-
                             Ultima = p;
                         }
                         p.Anterior = actual.Anterior.Anterior;
@@ -373,12 +371,8 @@ namespace Dinamica
                         }
                         else
                         {
-
                             Primera = p;
                         }
-
-
-
                     }
                     else if ((actual.Anterior != null && !actual.Anterior.Ocupada) || (actual.Siguiente != null && !actual.Siguiente.Ocupada))
                     {
@@ -502,6 +496,40 @@ namespace Dinamica
                 }
             }
 
+            //Agregar los del StandBy
+            if(encontrado)
+            {
+                bool bandera = false;
+                Particion pAux = null;
+                foreach(Particion p in StandBy)
+                {
+                    actual = Primera;
+                    while(actual != null)
+                    {
+                        if(!actual.Ocupada)
+                        {
+                            if(p.Size <= actual.Size && !bandera)
+                            {
+                                p.Siguiente = actual.Siguiente;
+                                p.Anterior = actual.Anterior;
+                                pAux = p;
+                                bandera = true;
+                            }
+                        }
+                        actual = actual.Siguiente;
+                    }
+
+                    if (pAux != null)
+                        break;
+                }
+                //Verifica si uno de los del StandBy puede entrar
+                if(bandera)
+                {
+                    nombresUsados.Remove(pAux.id);
+                    AgregarParticion(pAux.Size, pAux.Ocupada, pAux.id);
+                    StandBy.Remove(pAux);
+                }
+            }
 
             return liberado;
         }
